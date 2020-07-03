@@ -6,33 +6,35 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class RocketBehaviour : MonoBehaviour
 {
+    [Header("Speed and Range of Motion")]
     [Tooltip("In ms^-1")] [SerializeField] float Speed = 7f;
     [Tooltip("In m")] [SerializeField] float xRange = 5.5f;
     [Tooltip("In m")] [SerializeField] float yRange = 3f;
 
+    [Header("Pitch, Yaw and Roll Factor")]
     [SerializeField] float positionPitchFactor = -5f;
     [SerializeField] float controlPitchFactor = -20f;
-
     [SerializeField] float positionYawFactor = +5f;
-
     [SerializeField] float controlRollFactor = -5f;
+    bool ControlWorking = true;
 
     float xThrow;
     float yThrow;
 
     // Start is called before the first frame update
-    void Start()
-    {
-
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        Translation();
-        Rotation();
+        if(ControlWorking == true)
+        {
+            Translation();
+            Rotation();
+        }
+        
     }
+
+   
 
     private void Rotation()
     {
@@ -57,5 +59,11 @@ public class RocketBehaviour : MonoBehaviour
         float clampedXPosV = Mathf.Clamp(rawNewYPos, -yRange, +yRange);
 
         transform.localPosition = new Vector3(transform.localPosition.x, clampedXPosV, transform.localPosition.z);
+    }
+
+    private void CrashReporter()
+    {
+        ControlWorking = false;
+        print("controls frozen");
     }
 }
