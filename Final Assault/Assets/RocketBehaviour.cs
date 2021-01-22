@@ -21,6 +21,7 @@ public class RocketBehaviour : MonoBehaviour
     float xThrow;
     float yThrow;
 
+    [SerializeField] GameObject deathFX;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -64,6 +65,6 @@ public class RocketBehaviour : MonoBehaviour
     private void CrashReporter()
     {
         ControlWorking = false;
-        print("controls frozen");
+        deathFX.SetActive(true);
     }
 }
